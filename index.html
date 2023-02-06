@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head type="text/css" media="print">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print App</title>
+    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="./assets/bootstrap5/css/bootstrap.min.css">
+    <script src="./assets/bootstrap5/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/jquey.3.6.js"></script>
+    <link rel="stylesheet" href="./assets/aos/aos.css">
+</head>
+
+<body>
+    <section class="hideme container-fluid background-radial-gradient">
+        <div class=" container px-4 py-5 px-md-5 text-center text-lg-start">
+            <div class="row gx-lg-5 align-items-center mb-5">
+                <div class="col-lg-4 col-md-2 mb-5 mb-lg-0" style="z-index: 10">
+                    <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                        <img src="./assets/Fidelity.jpg" class="bankLogo" alt=""> <br />
+                        <span style="color: hsl(218, 81%, 75%)">Card Printer</span>
+                    </h1>
+                    <p class="mb-4 opacity-70" style="color: #fff">
+                        Fill the card form to print user details on a card. Click the "Print Card" button after
+                        confirmation
+                    </p>
+                </div>
+
+                <div class="col-lg-8 col-md-10 mb-5 mb-lg-0 position-relative">
+                    <div class="card bg-glass" data-aos="fade-up">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            <form method="POST">
+                                <div class="card">
+                                    <div class="card-header d-flex" id="cardHeader">
+                                        <h2 class="card-title">Card Form</h2>
+                                        <h2 class="card-title copper-font-hidden">Card Form</h2>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group mb-5">
+                                                    <label for="cardType">Card Type</label>
+                                                    <select name="cardType" id="cardType" class="form-control"
+                                                        onchange="displayFeats('type', this.value)" readonly disabled>
+                                                        <option value="0">Debit</option>
+                                                        <option value="1">Credit</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mb-5">
+                                                    <label for="cardNum">Number on Card</label>
+                                                    <input type="text" name="cardNum" id="cardNum" class="form-control"
+                                                        placeholder="Enter Number on Card" disabled
+                                                        onkeyup="displayFeats('num', this.value)" required />
+                                                </div>
+                                                <div class="form-group mb-5">
+                                                    <label for="month">Expiry Date</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <input type="number" name="month" id="month"
+                                                                class="form-control" placeholder="Expiry Month (09)"
+                                                                disabled onkeyup="displayFeats('expMon', this.value)"
+                                                                required />
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <input type="number" name="year" id="year"
+                                                                class="form-control" placeholder="Expiry Year (22)"
+                                                                disabled onkeyup="displayFeats('expYr', this.value)"
+                                                                required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="cardName">Card Holder's Name</label>
+                                                    <input type="text" name="cardName" id="cardName"
+                                                        class="form-control" placeholder="Card Horder's Name" required
+                                                        onkeyup="displayFeats('name', this.value), printName(this.value)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="card-shape print"
+                                                    style="margin: 100px auto; height: 204px; width: 323.53px; border-radius: 11.5px; border: solid 1px #ccc; padding: 10px">
+                                                    <h4 id="shwCardType">Debit Card</h4>
+                                                    <div style="font-size: 20px; letter-spacing: 4px; margin-top: 45px"
+                                                        id="shwCardNum">0000 0000 0000 0000</div>
+                                                    <div
+                                                        style="font-size: 14px; letter-spacing: 2px; font-weight: 600;">
+                                                        <span id="shwCardExpMon"></span><span id="shwCardExpYr"></span>
+                                                    </div>
+                                                    <h6 id="shwCardName" style="margin-top: 45px"></h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-sm btn-success" name="addCard"
+                                            onclick="window.print();return false;">Print
+                                            Card</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="showcard_name"></div>
+    <script>
+        const printName = (e) => {
+            const inputCardName = document.getElementById("cardName");
+            const printCardName = document.getElementById("showcard_name");
+            printCardName.innerHTML = e;
+        }
+        function displayFeats(typ, txt) {
+            if (typ == "type") {
+                $("#shwCardType").html(txt);
+            }
+            if (typ == "num") {
+                $("#shwCardNum").html(txt);
+            }
+            if (typ == "expMon") {
+                $("#shwCardExpMon").html(txt);
+            }
+            if (typ == "name") {
+                $("#shwCardName").html(txt);
+            }
+            if (typ == "expYr") {
+                $("#shwCardExpYr").html(txt);
+            }
+        }
+    </script>
+    <script src="./assets/aos/aos.js"></script>
+    <script src="./assets/js/index.js"></script>
+</body>
+
+</html>
